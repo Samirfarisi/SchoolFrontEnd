@@ -1,0 +1,321 @@
+/* Main styling enhancements for the entire website */
+
+/* Animation Keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Base Design Improvements - Strict Layout Rules */
+html, body {
+  height: 100% !important;
+  overflow-x: hidden;
+  animation: fadeIn 0.5s ease-in-out;
+  scroll-behavior: smooth;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-sizing: border-box;
+}
+
+#root {
+  min-height: 100vh !important; /* Minimum height is full viewport height */
+  display: flex !important;
+  flex-direction: column !important;
+  position: relative;
+  width: 100% !important;
+}
+
+/* Page wrapper for proper layout */
+.page-wrapper {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 100vh !important;
+  width: 100% !important;
+}
+
+/* Content container that pushes footer down */
+.content-container {
+  flex: 1 0 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  position: relative;
+  width: 100% !important;
+  min-height: 70vh !important; /* Ensure there's always enough content space */
+}
+
+/* Make the main content area grow to push footer down */
+main, .home-page, .section-loader, [class$="-page"] {
+  flex: 1 0 auto !important;
+}
+
+/* Loading state - ensure minimum height still maintained */
+.section-loader {
+  min-height: 70vh !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Enhanced Buttons */
+.btn {
+  background: linear-gradient(45deg, var(--kappel), #13a394);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(19, 163, 148, 0.2);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(19, 163, 148, 0.3);
+  background: linear-gradient(45deg, #13a394, var(--kappel));
+}
+
+.btn ion-icon {
+  font-size: 18px;
+  transition: transform 0.3s ease;
+}
+
+.btn:hover ion-icon {
+  transform: translateX(5px);
+}
+
+.hero-btn {
+  margin-top: 10px;
+  animation: slideInUp 0.8s ease forwards 0.6s;
+  opacity: 0;
+}
+
+/* Section titles global enhancement */
+.section-title {
+  position: relative;
+  z-index: 1;
+}
+
+.section-title::before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: -25%;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(19, 163, 148, 0.1);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.section-title .span {
+  position: relative;
+}
+
+.section-title .span::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 6px;
+  background-color: rgba(19, 163, 148, 0.2);
+  border-radius: 10px;
+  z-index: -1;
+}
+
+/* Enhanced Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Navbar Enhancements */
+.navbar {
+  animation: slideInUp 0.5s ease forwards;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(5px);
+}
+
+/* Footer Enhancements */
+.footer {
+  background-color: #111827;
+  color: #e5e7eb;
+  position: relative;
+  overflow: hidden;
+  margin-top: 50px;
+  z-index: 0; /* Lower z-index to ensure it stays behind content */
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, var(--kappel), #13a394, var(--kappel));
+  background-size: 200% 100%;
+  animation: gradientFlow 3s linear infinite;
+}
+
+/* Section spacing */
+.section {
+  padding: 50px 0;
+  position: relative;
+}
+
+/* First section (home) additional styling */
+section#home {
+  padding-top: 70px; /* Match navbar height */
+  margin-top: 0; /* Remove margin as we're using padding */
+}
+
+/* Home page specific styling */
+.home-page {
+  padding-top: 0;
+  margin-top: 0;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 40px 0;
+  }
+  
+  section#home {
+    padding-top: 70px;
+  }
+}
+
+/* Animated background dots */
+.hero::after,
+.about::after,
+.category::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-image: radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  background-size: 30px 30px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, var(--kappel), #13a394);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #13a394, var(--kappel));
+}
+
+/* Image styling */
+img {
+  max-width: 100%;
+  height: auto;
+  transition: all 0.3s ease;
+}
+
+/* Link styling */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+/* Add some micro-interactions */
+button:active, 
+a:active {
+  transform: scale(0.95);
+}
+
+/* Responsive font sizes */
+@media (max-width: 768px) {
+  h1, .h1 {
+    font-size: 2.5rem !important;
+  }
+  
+  h2, .h2 {
+    font-size: 2rem !important;
+  }
+  
+  h3, .h3 {
+    font-size: 1.5rem !important;
+  }
+}
+
+/* Add a smooth page transition effect */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.page-transition-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+/* Animation delays for staggered animations */
+.stagger-animation:nth-child(1) { animation-delay: 0.1s; }
+.stagger-animation:nth-child(2) { animation-delay: 0.2s; }
+.stagger-animation:nth-child(3) { animation-delay: 0.3s; }
+.stagger-animation:nth-child(4) { animation-delay: 0.4s; }
+.stagger-animation:nth-child(5) { animation-delay: 0.5s; }

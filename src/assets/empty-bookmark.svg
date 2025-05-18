@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200px" height="180px" viewBox="0 0 200 180" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(0.000000, 0.000000)">
+            <rect fill="#F8F9FA" x="0" y="0" width="200" height="180" rx="8"></rect>
+            <g transform="translate(60.000000, 30.000000)">
+                <path d="M10,0 L70,0 C75.5228475,-1.01453063e-15 80,4.4771525 80,10 L80,120 L40,100 L0,120 L0,10 C-6.76353751e-16,4.4771525 4.4771525,1.01453063e-15 10,0 Z" fill="#DEE2E6"></path>
+                <path d="M15,10 L65,10 C67.7614237,10 70,12.2385763 70,15 L70,95 L40,80 L10,95 L10,15 C10,12.2385763 12.2385763,10 15,10 Z" fill="#FFFFFF"></path>
+                <path d="M30,35 L50,35 C52.209139,35 54,36.790861 54,39 L54,65 L40,60 L26,65 L26,39 C26,36.790861 27.790861,35 30,35 Z" fill="#13A394" opacity="0.2"></path>
+                <circle fill="#13A394" opacity="0.5" cx="40" cy="47" r="8"></circle>
+                <path d="M36,47 L44,47" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"></path>
+                <rect fill="#DEE2E6" x="15" y="120" width="50" height="6" rx="3"></rect>
+                <rect fill="#DEE2E6" x="20" y="132" width="40" height="6" rx="3"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

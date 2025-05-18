@@ -1,0 +1,545 @@
+/* Enhanced saved courses page styling with tan color scheme and improved responsiveness */
+
+:root {
+  --primary-tan: #d2b48c;
+  --dark-tan: #b89365;
+  --light-tan: #f5ebe0;
+  --accent-tan: #c8a887;
+  --text-dark: #413628;
+  --text-medium: #6d5d47;
+  --text-light: #a89782;
+  --white: #ffffff;
+  --off-white: #fcf9f5;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(30px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes floating {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Main container */
+.saved-courses-page {
+  padding: 80px 0 100px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+
+.saved-courses-page h1 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  font-weight: 500;
+  text-align: left;
+  padding-left: 10px;
+}
+
+.saved-courses-page h1:after {
+  content: '';
+  display: block;
+  margin-top: 8px;
+  width: 40px;
+  height: 2px;
+  background: #d2b48c;
+}
+
+/* Saved courses counter */
+.saved-counter {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  background: linear-gradient(135deg, var(--white), var(--light-tan));
+  border-radius: 15px;
+  padding: 20px 25px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  animation: scaleIn 0.6s ease-out forwards;
+  border-left: 5px solid var(--primary-tan);
+  width: 100%;
+}
+
+.saved-counter-icon {
+  width: 50px;
+  height: 50px;
+  background: rgba(210, 180, 140, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  animation: floating 3s ease-in-out infinite;
+}
+
+.saved-counter-icon ion-icon,
+.saved-counter-icon .icon-fallback {
+  font-size: 24px;
+  color: var(--dark-tan);
+}
+
+.icon-fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+  line-height: 1;
+}
+
+.saved-counter-text {
+  color: #2c3e50;
+}
+
+.saved-counter-text span {
+  font-weight: bold;
+  color: var(--dark-tan);
+  font-size: 1.2rem;
+}
+
+/* Main content container */
+.saved-courses-content {
+  width: 100%;
+  max-width: 1200px;
+  background: var(--white);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: relative;
+  margin: 0 auto 30px;
+  z-index: 5;
+}
+
+/* Courses grid - 3 columns per row */
+.saved-courses-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 16px;
+  padding: 0;
+  margin-top: 20px;
+  width: 100%;
+}
+
+/* Course card styling based on reference image */
+.course-card {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.2s ease;
+  margin-bottom: 20px;
+}
+
+.course-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-video {
+  height: 180px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f1f3;
+  background-size: cover;
+  background-position: center;
+}
+
+.card-video::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4));
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.course-card:hover .card-video::before {
+  opacity: 1;
+}
+
+.card-body {
+  padding: 15px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-body h2 {
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+  color: #333;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.card-body p {
+  color: #666;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px;
+  background: #f8f9fa;
+  border-top: 1px solid #f1f1f1;
+  margin-top: auto; /* push to bottom */
+}
+
+.unsave-btn, .view-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 8px 16px;
+  border-radius: 6px;
+}
+
+/* Remove button style matching reference */
+.unsave-btn {
+  color: #e53935;
+  background: transparent;
+  padding: 6px 12px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+}
+
+.unsave-btn span {
+  font-weight: 500;
+}
+
+.unsave-btn:hover {
+  background: rgba(229, 57, 53, 0.1);
+}
+
+.unsave-icon {
+  font-size: 1rem;
+  margin-right: 4px;
+}
+
+/* View button style matching reference */
+.view-btn {
+  color: #1976d2;
+  background: transparent;
+  padding: 6px 12px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+}
+
+.view-btn span {
+  font-weight: 500;
+}
+
+.view-btn:hover {
+  background: rgba(25, 118, 210, 0.1);
+}
+
+.view-icon {
+  font-size: 1rem;
+  margin-right: 4px;
+}
+
+/* Mark as complete button styling */
+.mark-as-complete {
+  background: #f1f1f1;
+  border: none;
+  padding: 6px 12px;
+  color: #555;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.mark-as-complete:hover {
+  background: #e0e0e0;
+}
+
+.mark-as-complete.completed {
+  background: #d4edda;
+  color: #155724;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  background: #f8f9fa;
+  border-radius: 15px;
+  margin: 30px auto;
+  max-width: 500px;
+  animation: fadeIn 0.5s ease forwards;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.empty-state img {
+  width: 150px;
+  margin-bottom: 25px;
+  opacity: 0.7;
+  animation: floating 4s ease-in-out infinite;
+}
+
+.empty-state h2 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+}
+
+.empty-state p {
+  color: #6c757d;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+.empty-state .btn {
+  background: var(--primary-tan);
+  color: var(--white);
+  border: none;
+  padding: 12px 25px;
+  border-radius: 50px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(210, 180, 140, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.empty-state .btn:hover {
+  background: var(--dark-tan);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(184, 147, 101, 0.4);
+}
+
+.empty-state .btn ion-icon {
+  font-size: 18px;
+}
+
+/* Loading state */
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+}
+
+.loader-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid var(--primary-tan);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Progress bar styles */
+.progress-section {
+  margin: 15px 0;
+  width: 100%;
+}
+
+.progress-text {
+  font-size: 0.85rem;
+  color: var(--text-medium);
+  margin-bottom: 5px;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 8px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 5px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  background-color: #e9ecef;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--primary-tan);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+/* Error message */
+.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  margin: 20px auto;
+  max-width: 500px;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+  .saved-courses-content {
+    width: 80vw;
+    padding: 25px;
+  }
+}
+
+@media (max-width: 991px) {
+  .saved-courses-content {
+    width: 85vw;
+  }
+  
+  /* Keep 3 columns on larger screens */
+  .saved-courses-container {
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 15px;
+  }
+}
+
+@media (max-width: 992px) {
+  .saved-courses-page {
+    padding: 100px 0 200px; /* Maintain footer spacing */
+  }
+  
+  .saved-courses-page h1 {
+    font-size: 1.8rem;
+  }
+  
+  .saved-courses-content {
+    width: 90vw;
+    padding: 20px;
+  }
+  
+  /* Switch to 2 columns for tablets */
+  .saved-courses-container {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+  }
+  
+  .card-video {
+    height: 150px;
+  }
+}
+
+@media (max-width: 768px) {
+  .saved-courses-page {
+    padding: 100px 0 200px; /* Maintain footer spacing */
+  }
+  
+  .saved-courses-content {
+    width: 95vw;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .saved-courses-page {
+    padding: 80px 0 180px; /* Slightly reduced padding for mobile */
+  }
+  
+  .saved-courses-content {
+    width: 95vw;
+    padding: 15px;
+    min-height: auto;
+  }
+  
+  /* Single column for mobile */
+  .saved-courses-container {
+    grid-template-columns: 1fr;
+    grid-gap: 15px;
+  }
+  
+  .card-video {
+    height: 180px; /* Restored height for single column layout */
+  }
+  
+  .course-card {
+    aspect-ratio: auto;
+  }
+  
+  .card-body {
+    padding: 15px;
+  }
+  
+  .card-actions {
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px 15px;
+  }
+  
+  .view-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .unsave-btn {
+    width: 100%;
+    justify-content: center;
+    margin-right: 0;
+    margin-bottom: 8px;
+  }
+  
+  .saved-counter {
+    flex-direction: column;
+    text-align: center;
+    padding: 15px;
+  }
+  
+  .saved-counter-icon {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}

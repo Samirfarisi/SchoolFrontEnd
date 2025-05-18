@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200px" height="180px" viewBox="0 0 200 180" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(0.000000, 0.000000)">
+            <rect fill="#F8F9FA" x="0" y="0" width="200" height="180" rx="8"></rect>
+            <g transform="translate(50.000000, 30.000000)">
+                <!-- Megaphone/Announcement icon -->
+                <path d="M80,30 C88.8365564,30 96,37.1634436 96,46 C96,54.8365564 88.8365564,62 80,62 L80,76 L70,62 L20,62 C11.1634436,62 4,54.8365564 4,46 C4,37.1634436 11.1634436,30 20,30 L80,30 Z" fill="#DEE2E6"></path>
+                <path d="M80,38 C84.418278,38 88,41.581722 88,46 C88,50.418278 84.418278,54 80,54 L80,62 L76,54 L20,54 C15.581722,54 12,50.418278 12,46 C12,41.581722 15.581722,38 20,38 L80,38 Z" fill="#FFFFFF"></path>
+                
+                <!-- Notification/Announcement bars -->
+                <rect fill="#13A394" opacity="0.2" x="30" y="45" width="40" height="4" rx="2"></rect>
+                
+                <!-- Megaphone -->
+                <path d="M10,46 L0,56 C0,56 0,36 0,36 L10,46 Z" fill="#DEE2E6"></path>
+                <path d="M100,12 C100,12 100,80 100,80 C91.1634644,80 84,72.836584 84,64 L84,28 C84,19.163416 91.1634644,12 100,12 Z" fill="#13A394" opacity="0.2"></path>
+                
+                <!-- Text lines -->
+                <rect fill="#DEE2E6" x="20" y="90" width="60" height="8" rx="4"></rect>
+                <rect fill="#DEE2E6" x="10" y="106" width="80" height="6" rx="3"></rect>
+                <rect fill="#DEE2E6" x="15" y="118" width="70" height="6" rx="3"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,351 @@
+import React, { useState, useEffect } from 'react';
+import api from '../api/axios';
+
+const AdminDashboardHome = () => {
+  const [stats, setStats] = useState({
+    totalUsers: 0,
+    totalCourses: 0,
+    completedCourses: 0,
+    savedCourses: 0,
+    totalMessages: 0
+  });
+  
+  const [courseDistribution, setCourseDistribution] = useState([]);
+  const [userRegistrationData, setUserRegistrationData] = useState([]);
+  const [topCourses, setTopCourses] = useState([]);
+  const [recentActivity, setRecentActivity] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Mock data for fallback
+  const mockData = {
+    users: [
+      { id: 1, first_name: 'John', last_name: 'Doe', email: 'john@example.com', created_at: '2023-01-10' },
+      { id: 2, first_name: 'Jane', last_name: 'Smith', email: 'jane@example.com', created_at: '2023-02-15' },
+      { id: 3, first_name: 'Robert', last_name: 'Brown', email: 'robert@example.com', created_at: '2023-03-20' }
+    ],
+    courses: [
+      { id: 1, title: 'Introduction to React', category_id: 1 },
+      { id: 2, title: 'Advanced JavaScript', category_id: 1 },
+      { id: 3, title: 'PHP Basics', category_id: 2 },
+      { id: 4, title: 'Laravel Fundamentals', category_id: 2 },
+      { id: 5, title: 'UI/UX Design', category_id: 3 }
+    ],
+    categories: [
+      { id: 1, name: 'Frontend' },
+      { id: 2, name: 'Backend' },
+      { id: 3, name: 'Design' }
+    ]
+  };
+
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      setIsLoading(true);
+      
+      try {
+        // Try to fetch dashboard statistics from API
+        const response = await api.get('/admin/dashboard/statistics');
+        const data = response.data;
+        
+        // Set stats
+        if (data.stats) {
+          setStats(data.stats);
+        } else {
+          // Fallback
+          setStats({
+            totalUsers: mockData.users.length,
+            totalCourses: mockData.courses.length,
+            completedCourses: 2,
+            savedCourses: 3,
+            totalMessages: 10
+          });
+        }
+        
+        // Set course distribution
+        if (data.courseDistribution && data.courseDistribution.length > 0) {
+          setCourseDistribution(data.courseDistribution);
+        } else {
+          // Fallback
+          setCourseDistribution([
+            { name: 'Frontend', count: 2 },
+            { name: 'Backend', count: 2 },
+            { name: 'Design', count: 1 }
+          ]);
+        }
+        
+        // Set user registration data
+        if (data.userRegistrationData && data.userRegistrationData.length > 0) {
+          setUserRegistrationData(data.userRegistrationData);
+        } else {
+          // Fallback
+          setUserRegistrationData([
+            { month: 'Jan', count: 2 },
+            { month: 'Feb', count: 3 },
+            { month: 'Mar', count: 1 },
+            { month: 'Apr', count: 4 },
+            { month: 'May', count: 2 },
+            { month: 'Jun', count: 5 }
+          ]);
+        }
+        
+        // Set top courses
+        if (data.topCourses && data.topCourses.length > 0) {
+          setTopCourses(data.topCourses);
+        } else {
+          // Fallback
+          setTopCourses(mockData.courses.slice(0, 5));
+        }
+        
+        // Set recent activity
+        if (data.recentActivity && data.recentActivity.length > 0) {
+          setRecentActivity(data.recentActivity);
+        } else {
+          // Fallback
+          setRecentActivity([
+            { type: 'user_registered', user: 'John Doe', timestamp: '2023-06-10T10:30:00Z' },
+            { type: 'course_saved', user: 'Jane Smith', course: 'React Basics', timestamp: '2023-06-09T15:45:00Z' },
+            { type: 'course_completed', user: 'Robert Brown', course: 'JavaScript Advanced', timestamp: '2023-06-08T09:20:00Z' }
+          ]);
+        }
+        
+      } catch (error) {
+        console.error('Error fetching dashboard data:', error);
+        setError('Failed to load dashboard data. Using fallback data instead.');
+        
+        // Set fallback data
+        setStats({
+          totalUsers: mockData.users.length,
+          totalCourses: mockData.courses.length,
+          completedCourses: 2,
+          savedCourses: 3,
+          totalMessages: 10
+        });
+        
+        setCourseDistribution([
+          { name: 'Frontend', count: 2 },
+          { name: 'Backend', count: 2 },
+          { name: 'Design', count: 1 }
+        ]);
+        
+        setUserRegistrationData([
+          { month: 'Jan', count: 2 },
+          { month: 'Feb', count: 3 },
+          { month: 'Mar', count: 1 },
+          { month: 'Apr', count: 4 },
+          { month: 'May', count: 2 },
+          { month: 'Jun', count: 5 }
+        ]);
+        
+        setTopCourses(mockData.courses);
+        
+        setRecentActivity([
+          { type: 'user_registered', user: 'John Doe', timestamp: '2023-06-10T10:30:00Z' },
+          { type: 'course_saved', user: 'Jane Smith', course: 'React Basics', timestamp: '2023-06-09T15:45:00Z' },
+          { type: 'course_completed', user: 'Robert Brown', course: 'JavaScript Advanced', timestamp: '2023-06-08T09:20:00Z' }
+        ]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchDashboardData();
+  }, []);
+  
+  // Format timestamp to relative time
+  const formatTimeAgo = (timestamp) => {
+    if (!timestamp) return 'Unknown time';
+    
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diffInSeconds = Math.floor((now - date) / 1000);
+    
+    if (diffInSeconds < 60) return 'Just now';
+    if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} minutes ago`;
+    if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+    if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)} days ago`;
+    
+    return new Date(timestamp).toLocaleDateString();
+  };
+  
+  // Get icon class for activity type
+  const getActivityIcon = (type) => {
+    switch (type) {
+      case 'user_registered':
+        return 'fas fa-user';
+      case 'course_saved':
+        return 'fas fa-heart';
+      case 'course_completed':
+        return 'fas fa-check-circle';
+      default:
+        return 'fas fa-bell';
+    }
+  };
+  
+  // Get activity message
+  const getActivityMessage = (activity) => {
+    switch (activity.type) {
+      case 'user_registered':
+        return `${activity.user} joined the platform`;
+      case 'course_saved':
+        return `${activity.user} saved "${activity.course}"`;
+      case 'course_completed':
+        return `${activity.user} completed "${activity.course}"`;
+      default:
+        return `${activity.user} performed an action`;
+    }
+  };
+
+  return (
+    <div className="admin-dashboard">
+      {isLoading ? (
+        <div className="loading-overlay">
+          <div className="spinner"></div>
+          <p>Loading dashboard data...</p>
+        </div>
+      ) : (
+        <>
+          {error && <div className="error-message">{error}</div>}
+          
+          <h1 className="dashboard-title">Admin Dashboard</h1>
+          
+          {/* Stats Cards */}
+          <div className="stats-cards">
+            <div className="stat-card">
+              <div className="stat-icon">
+                <i className="fas fa-users"></i>
+              </div>
+              <div className="stat-content">
+                <h3>Total Users</h3>
+                <p className="stat-value">{stats.totalUsers}</p>
+              </div>
+            </div>
+            
+            <div className="stat-card">
+              <div className="stat-icon">
+                <i className="fas fa-book"></i>
+              </div>
+              <div className="stat-content">
+                <h3>Total Courses</h3>
+                <p className="stat-value">{stats.totalCourses}</p>
+              </div>
+            </div>
+            
+            <div className="stat-card">
+              <div className="stat-icon">
+                <i className="fas fa-check-circle"></i>
+              </div>
+              <div className="stat-content">
+                <h3>Completed Courses</h3>
+                <p className="stat-value">{stats.completedCourses}</p>
+              </div>
+            </div>
+            
+            <div className="stat-card">
+              <div className="stat-icon">
+                <i className="fas fa-heart"></i>
+              </div>
+              <div className="stat-content">
+                <h3>Saved Courses</h3>
+                <p className="stat-value">{stats.savedCourses}</p>
+              </div>
+            </div>
+            
+            <div className="stat-card">
+              <div className="stat-icon">
+                <i className="fas fa-comment"></i>
+              </div>
+              <div className="stat-content">
+                <h3>Total Messages</h3>
+                <p className="stat-value">{stats.totalMessages}</p>
+              </div>
+            </div>
+          </div>
+          
+          {/* Charts Section */}
+          <div className="dashboard-charts">
+            <div className="chart-card">
+              <h2>Course Distribution</h2>
+              <div className="chart-container">
+                <div className="simple-chart">
+                  {courseDistribution.map((item, index) => (
+                    <div key={index} className="chart-item">
+                      <div className="chart-label">{item.name}</div>
+                      <div className="chart-bar-container">
+                        <div 
+                          className="chart-bar" 
+                          style={{ 
+                            width: `${(item.count / Math.max(...courseDistribution.map(d => d.count))) * 100}%`,
+                            backgroundColor: `hsl(${index * 60}, 70%, 50%)`
+                          }}
+                        ></div>
+                        <span className="chart-value">{item.count}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            
+            <div className="chart-card">
+              <h2>User Registration</h2>
+              <div className="chart-container">
+                <div className="simple-chart">
+                  {userRegistrationData.map((item, index) => (
+                    <div key={index} className="chart-item">
+                      <div className="chart-label">{item.month}</div>
+                      <div className="chart-bar-container">
+                        <div 
+                          className="chart-bar" 
+                          style={{ 
+                            width: `${(item.count / Math.max(...userRegistrationData.map(d => d.count))) * 100}%`,
+                            backgroundColor: `hsl(200, 70%, ${40 + (index * 10)}%)`
+                          }}
+                        ></div>
+                        <span className="chart-value">{item.count}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Top Courses and Recent Activity */}
+          <div className="dashboard-details">
+            <div className="detail-card">
+              <h2>Top Courses</h2>
+              <ul className="top-courses-list">
+                {topCourses.map((course, index) => (
+                  <li key={index} className="course-item">
+                    <span className="course-rank">{index + 1}</span>
+                    <span className="course-title">{course.title}</span>
+                    <span className="course-saves">{course.saves_count || Math.floor(Math.random() * 20) + 5} saves</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            <div className="detail-card">
+              <h2>Recent Activity</h2>
+              <ul className="activity-list">
+                {recentActivity.map((activity, index) => (
+                  <li key={index} className="activity-item">
+                    <div className="activity-icon">
+                      <i className={getActivityIcon(activity.type)}></i>
+                    </div>
+                    <div className="activity-details">
+                      <div className="activity-message">{getActivityMessage(activity)}</div>
+                      <div className="activity-time">{formatTimeAgo(activity.timestamp)}</div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
+export default AdminDashboardHome;

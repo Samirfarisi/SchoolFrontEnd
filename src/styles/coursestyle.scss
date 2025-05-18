@@ -1,0 +1,307 @@
+:root {
+
+    /**
+   * colors
+   */
+
+    --selective-yellow: hsl(42, 94%, 55%);
+    --eerie-black-1: hsl(0, 0%, 9%);
+    --eerie-black-2: hsl(180, 3%, 7%);
+    --quick-silver: hsl(0, 0%, 65%);
+    --radical-red: hsl(351, 83%, 61%);
+    --light-gray: hsl(0, 0%, 80%);
+    --isabelline: hsl(36, 33%, 94%);
+    --gray-x-11: hsl(0, 0%, 73%);
+    --kappel_15: hsla(170, 75%, 41%, 0.15);
+    --platinum: hsl(0, 0%, 90%);
+    --gray-web: hsl(0, 0%, 50%);
+    --black_80: hsla(0, 0%, 0%, 0.8);
+    --white_50: hsla(0, 0%, 100%, 0.5);
+    --black_50: hsla(0, 0%, 0%, 0.5);
+    --black_30: hsla(0, 0%, 0%, 0.3);
+    --kappel: hsl(170, 75%, 41%);
+    --white: hsl(0, 0%, 100%);
+
+    /**
+   * gradient color
+   */
+
+    --gradient: linear-gradient(-90deg, hsl(151, 58%, 46%) 0%, hsl(170, 75%, 41%) 100%);
+
+    /**
+   * typography
+   */
+
+    --ff-league_spartan: 'League Spartan', sans-serif;
+    --ff-poppins: 'Poppins', sans-serif;
+
+    --fs-1: 4.2rem;
+    --fs-2: 3.2rem;
+    --fs-3: 2.3rem;
+    --fs-4: 1.8rem;
+    --fs-5: 1.5rem;
+    --fs-6: 1.4rem;
+    --fs-7: 1.3rem;
+
+    --fw-500: 500;
+    --fw-600: 600;
+
+    /**
+   * spacing
+   */
+
+    --section-padding: 75px;
+
+    /**
+   * shadow
+   */
+
+    --shadow-1: 0 6px 15px 0 hsla(0, 0%, 0%, 0.05);
+    --shadow-2: 0 10px 30px hsla(0, 0%, 0%, 0.06);
+    --shadow-3: 0 10px 50px 0 hsla(220, 53%, 22%, 0.1);
+
+    /**
+   * radius
+   */
+
+    --radius-pill: 500px;
+    --radius-circle: 50%;
+    --radius-3: 3px;
+    --radius-5: 5px;
+    --radius-10: 10px;
+
+    /**
+   * transition
+   */
+
+    --transition-1: 0.25s ease;
+    --transition-2: 0.5s ease;
+    --cubic-in: cubic-bezier(0.51, 0.03, 0.64, 0.28);
+    --cubic-out: cubic-bezier(0.33, 0.85, 0.4, 0.96);
+
+}
+
+
+
+.category-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: var(--section-padding) 0;
+    justify-content: center;
+
+    button {
+        padding: 0.5rem 1rem;
+        background: var(--isabelline);
+        border: 1px solid var(--light-gray);
+        border-radius: var(--radius-5);
+        font-family: var(--ff-poppins);
+        font-weight: var(--fw-500);
+        cursor: pointer;
+        transition: all var(--transition-1);
+
+        &.active {
+            background: var(--kappel);
+            color: var(--white);
+            border-color: var(--kappel);
+        }
+
+        &:hover {
+            background: var(--kappel_15);
+        }
+    }
+}
+
+
+
+.courses-container {
+    
+    margin: 7rem 4rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--section-padding);
+}
+
+.height-100 {
+    height: 100vh;
+}
+
+// .course-card {
+//     position: relative;
+//     background: var(--white);
+//     box-shadow: var(--shadow-2);
+//     border-radius: var(--radius-5);
+//     overflow: hidden;
+//     transition: box-shadow var(--transition-1);
+
+//     &:hover {
+//         box-shadow: var(--shadow-3);
+//     }
+
+//     .card-video {
+//         position: relative;
+//         padding-top: 56.25%; // 16:9 aspect
+
+//         .react-player {
+//             position: absolute;
+//             top: 0;
+//             left: 0;
+//         }
+//     }
+
+//     .card-body {
+//         padding: var(--section-padding);
+
+//         h2 {
+//             font-size: var(--fs-4);
+//             margin-bottom: 0.5rem;
+//             color: var(--eerie-black-2);
+//             font-weight: var(--fw-600);
+//         }
+
+//         p {
+//             font-size: var(--fs-6);
+//             color: var(--quick-silver);
+//             line-height: 1.4;
+//         }
+//     }
+
+//     .save-btn {
+//         position: absolute;
+//         top: var(--radius-3);
+//         right: var(--radius-3);
+//         background: transparent;
+//         border: none;
+//         cursor: pointer;
+//         font-size: 2rem; // bigger icon
+//         color: var(--quick-silver);
+//         transition: color var(--transition-1);
+
+//         &.saved {
+//             color: var(--selective-yellow);
+//         }
+
+//         &:hover {
+//             color: var(--selective-yellow);
+//         }
+//     }
+// }
+
+// .error {
+//     color: var(--radical-red);
+//     text-align: center;
+//     margin: var(--section-padding) 0;
+// }
+
+/* Progress bar at top */
+.progress-summary {
+    max-width: 800px;
+    margin: 8rem auto;
+
+    .info {
+        text-align: center;
+        font-weight: var(--fw-600);
+        margin-bottom: 0.5rem;
+    }
+
+    .bar {
+        background: var(--light-gray);
+        border-radius: var(--radius-5);
+        height: 10px;
+        overflow: hidden;
+
+        .fill {
+            height: 100%;
+            background: var(--kappel);
+            transition: width 0.5s ease;
+        }
+    }
+}
+
+/* Course card actions */
+.course-card {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background: var(--white);
+    border-radius: var(--radius-5);
+    box-shadow: var(--shadow-1);
+    overflow: hidden;
+
+    .card-video {
+        aspect-ratio: 16/9;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+
+    .card-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        gap: 0.5rem;
+    }
+}
+
+/* Save button (existing) */
+.save-btn {
+    position: absolute;
+        top: var(--radius-3);
+        right: var(--radius-3);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        font-size: 2rem; // bigger icon
+        color: var(--quick-silver);
+        transition: color var(--transition-1);
+    
+        &.saved {
+            color: var(--selective-yellow);
+        }
+    
+        &:hover {
+            color: var(--selective-yellow);
+        }
+}
+
+
+
+/* Mark-complete button */
+.complete-btn {
+    flex: 1;
+    padding: 0.5rem;
+    font-size: var(--fs-6);
+    border: 1px solid var(--kappel);
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--kappel);
+    cursor: pointer;
+    transition: var(--transition-1);
+    text-align: center;
+
+    &.done {
+        background: var(--kappel);
+        color: var(--white);
+    }
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+/* Responsive grid */
+@media (min-width: 768px) {
+    .courses-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .courses-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
