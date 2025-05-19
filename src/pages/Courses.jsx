@@ -98,6 +98,8 @@ import './courses.css';
 import '../styles/course-detail.css';
 import Loader from '../components/Loader';
 import ProgressSummary from '../components/ProgressSummary';
+import QuizList from '../components/QuizList';
+import Quiz from '../components/Quiz';
 
 export default function Courses() {
     const { user, loading } = useAuth();
@@ -111,6 +113,7 @@ export default function Courses() {
     const [busy, setBusy] = useState(true);
     const [selectedCourse, setSelectedCourse] = useState(null);
     const [completedCourses, setCompletedCourses] = useState([]);
+    const [selectedQuiz, setSelectedQuiz] = useState(null);
 
     // Display indicator that mock data is being used
     const [usingMockData, setUsingMockData] = useState(false);  // We'll keep this but won't use mock data
@@ -467,16 +470,14 @@ export default function Courses() {
         : courses.filter(c => c.category_id === selectedCategory);
 
     // Close the course detail view and return to the main course list
-    const handleCloseCourseDetail = () => {
-        setSelectedCourse(null);
-    };
+    // (This is now defined earlier in the component)
 
     // Open the course detail view for a specific course
     const handleOpenCourseDetail = (course) => {
         setSelectedCourse(course);
     };
 
-    // Render course detail view with reviews
+    // Render course detail view with quizzes
     const renderCourseDetail = () => {
         if (!selectedCourse) return null;
         
@@ -490,63 +491,101 @@ export default function Courses() {
                         <ion-icon name="close-outline"></ion-icon>
                     </button>
                     
-                    <div className="course-detail-header">
-                        <h2 className="course-detail-title">{selectedCourse.title}</h2>
-                        <div className="course-detail-actions">
-                            <button
-                                className={isSaved ? 'save-btn-detail saved' : 'save-btn-detail'}
-                                onClick={() => toggleSave(selectedCourse.id, isSaved)}
-                                aria-label={isSaved ? 'Unsave' : 'Save'}
+                    {selectedQuiz ? (
+                        <div className="quiz-view-container">
+                            <button 
+                                className="back-to-course-btn"
+                                onClick={() => setSelectedQuiz(null)}
                             >
-                                <ion-icon name={isSaved ? 'bookmark' : 'bookmark-outline'} />
-                                {isSaved ? 'Saved' : 'Save'}
+                                <ion-icon name="arrow-back-outline"></ion-icon> Back to Course
                             </button>
-                            
-                            <button
-                                className={isDone ? 'complete-btn-detail done' : 'complete-btn-detail'}
-                                onClick={() => toggleComplete(selectedCourse)}
-                            >
-                                <ion-icon name={isDone ? 'checkmark-circle' : 'checkmark-circle-outline'} />
-                                {isDone ? 'Completed' : 'Mark as Complete'}
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div className="course-detail-content">
-                        <div className="course-detail-video">
-                            <VideoPlayer 
-                                url={selectedCourse.video_url} 
-                                controls 
-                                width="100%" 
-                                height="100%"
-                                playing={true} 
+                            <Quiz 
+                                quizId={selectedQuiz} 
+                                onComplete={handleQuizComplete}
+                                courseId={selectedCourse.id}
                             />
                         </div>
-                        
-                        <div className="course-detail-info">
-                            <div className="course-detail-description">
-                                <h3>Course Description</h3>
-                                <p>{selectedCourse.description}</p>
+                    ) : (
+                        <>
+                            <div className="course-detail-header">
+                                <h2 className="course-detail-title">{selectedCourse.title}</h2>
+                                <div className="course-detail-actions">
+                                    <button
+                                        className={isSaved ? 'save-btn-detail saved' : 'save-btn-detail'}
+                                        onClick={() => toggleSave(selectedCourse.id, isSaved)}
+                                        aria-label={isSaved ? 'Unsave' : 'Save'}
+                                    >
+                                        <ion-icon name={isSaved ? 'bookmark' : 'bookmark-outline'} />
+                                        {isSaved ? 'Saved' : 'Save'}
+                                    </button>
+                                    
+                                    <button
+                                        className={isDone ? 'complete-btn-detail done' : 'complete-btn-detail'}
+                                        onClick={() => toggleComplete(selectedCourse)}
+                                    >
+                                        <ion-icon name={isDone ? 'checkmark-circle' : 'checkmark-circle-outline'} />
+                                        {isDone ? 'Completed' : 'Mark as Complete'}
+                                    </button>
+                                </div>
                             </div>
                             
-                            {selectedCourse.category && (
-                                <div className="course-detail-category">
-                                    <span className="category-label">Category:</span>
-                                    <span className="category-name">{selectedCourse.category?.name}</span>
+                            <div className="course-detail-content">
+                                <div className="course-detail-video">
+                                    <VideoPlayer 
+                                        url={selectedCourse.video_url} 
+                                        controls 
+                                        width="100%" 
+                                        height="100%"
+                                        playing={true} 
+                                    />
                                 </div>
-                            )}
-                            
-                            {isDone && (
-                                <div className="completion-info">
-                                    <ion-icon name="time-outline"></ion-icon>
-                                    <span>Completed on {new Date(selectedCourse.pivot.completed_at).toLocaleDateString()}</span>
+                                
+                                <div className="course-detail-info">
+                                    <div className="course-detail-description">
+                                        <h3>Course Description</h3>
+                                        <p>{selectedCourse.description}</p>
+                                    </div>
+                                    
+                                    {selectedCourse.category && (
+                                        <div className="course-detail-category">
+                                            <span className="category-label">Category:</span>
+                                            <span className="category-name">{selectedCourse.category?.name}</span>
+                                        </div>
+                                    )}
+                                    
+                                    {isDone && (
+                                        <div className="completion-info">
+                                            <ion-icon name="time-outline"></ion-icon>
+                                            <span>Completed on {new Date(selectedCourse.pivot.completed_at).toLocaleDateString()}</span>
+                                        </div>
+                                    )}
+                                    
+                                    {/* Quiz List */}
+                                    <div className="course-quizzes">
+                                        <QuizList 
+                                            courseId={selectedCourse.id} 
+                                            onSelectQuiz={(quizId) => setSelectedQuiz(quizId)}
+                                        />
+                                    </div>
                                 </div>
-                            )}
-                        </div>
-                    </div>
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
         );
+    };
+
+    // Reset selected quiz when course detail is closed
+    const handleCloseCourseDetail = () => {
+        setSelectedCourse(null);
+        setSelectedQuiz(null);
+    };
+
+    // Handle quiz completion
+    const handleQuizComplete = (results) => {
+        console.log('Quiz completed:', results);
+        // You may want to update the UI or show a message
     };
 
     return (

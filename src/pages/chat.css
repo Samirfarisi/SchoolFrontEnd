@@ -92,8 +92,8 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   animation: scaleIn 0.6s ease-out forwards;
   position: relative;
-  width: 60vw;
-  max-width: 1000px;
+  width: 80vw;
+  max-width: 1400px;
   margin: 0 auto;
   height: 70vh; /* Fixed height for better proportions */
   min-height: 500px;
